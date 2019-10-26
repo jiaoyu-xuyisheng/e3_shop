@@ -1,0 +1,33 @@
+package com.jiaoyushop.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.jiaoyushop.mapper.TbItemMapper;
+import com.jiaoyushop.pojo.TbItem;
+import com.jiaoyushop.pojo.TbItemExample;
+import com.jiaoyushop.pojo.TbItemExample.Criteria;
+import com.jiaoyushop.service.ItemService;
+
+@Service
+public class ItemServiceImpl implements ItemService {
+	
+	@Autowired
+	private TbItemMapper tbItemMapper;
+
+	@Override
+	public TbItem getItemById(Long id) {
+		TbItemExample example=new TbItemExample();
+		Criteria c = example.createCriteria();
+		c.andIdEqualTo(id);
+		List<TbItem> list = tbItemMapper.selectByExample(example);
+		if(list!=null) {
+			TbItem tbItem = list.get(0);
+			return tbItem;
+		}
+		return null;
+	}
+
+}
